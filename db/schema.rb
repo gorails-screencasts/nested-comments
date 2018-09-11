@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_11_190445) do
+ActiveRecord::Schema.define(version: 2018_09_11_194603) do
 
   create_table "announcements", force: :cascade do |t|
     t.datetime "published_at"
@@ -31,6 +31,12 @@ ActiveRecord::Schema.define(version: 2018_09_11_190445) do
     t.datetime "updated_at", null: false
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "discussions", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
