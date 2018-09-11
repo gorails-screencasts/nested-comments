@@ -1,0 +1,11 @@
+<div class="border-left pl-4 mt-4">
+  <strong><%= comment.user.name %></strong> posted
+  <%= simple_format comment.body %>
+
+  <div data-controller="reply">
+    <small><%= link_to "Reply", "#", data: { action: "click->reply#toggle" } %></small>
+    <%= render partial: "comments/form", locals: { commentable: @post, parent_id: comment.id, class: "mt-4 d-none", target: "reply.form" } %>
+  </div>
+
+  <%= render comment.comments %>
+</div>
