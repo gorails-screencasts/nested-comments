@@ -5,7 +5,10 @@ class CommentsController < ApplicationController
     @comment = @commentable.comments.new(comment_params)
     @comment.user = current_user
     if @comment.save
-      redirect_to @commentable
+      respond_to do |format|
+        format.html { redirect_to @commentable }
+        format.js
+      end
     else
       redirect_to @commentable, alert: "Something went wrong"
     end

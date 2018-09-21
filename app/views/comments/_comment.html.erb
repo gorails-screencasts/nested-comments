@@ -19,5 +19,7 @@
     } %>
   </div>
 
-  <%= render comment.comments, nesting: nesting + 1, max_nesting: local_assigns[:max_nesting] %>
+  <%= tag.div id: "#{dom_id(comment)}_comments" do %>
+    <%= render comment.comments, nesting: nesting + 1, max_nesting: local_assigns[:max_nesting] %>
+  <% end %>
 </div>
