@@ -2,8 +2,13 @@
 <% max_nesting = local_assigns[:max_nesting] %>
 
 <div class="border-left pl-4 mt-4">
-  <strong><%= comment.user.name %></strong> posted
-  <%= simple_format comment.body %>
+  <% if comment.deleted? %>
+    <strong>[deleted]</strong> posted
+    <p>[deleted]</p>
+  <% else %>
+    <strong><%= comment.user.name %></strong> posted
+    <%= simple_format comment.body %>
+  <% end %>
 
   <div data-controller="reply">
     <small>
