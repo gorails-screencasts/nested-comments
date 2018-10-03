@@ -22,5 +22,13 @@
 <h3>Comments</h3>
 <div id="comments">
   <%= render partial: "comments/form", locals: { commentable: @post } %>
-  <%= render @post.comments.where(parent_id: nil) %>
+
+  <% if params[:comment] %>
+    <p>Single comment thread. <%= link_to "View all comments", url_for() %></p>
+  <% end %>
+
+  <%= render @comments, continue_thread: 5 %>
 </div>
+
+<br />
+<%= paginate @comments %>

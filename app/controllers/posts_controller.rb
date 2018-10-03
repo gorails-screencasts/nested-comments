@@ -10,6 +10,13 @@ class PostsController < ApplicationController
   # GET /posts/1
   # GET /posts/1.json
   def show
+    @comments = if params[:comment]
+                  @post.comments.where(id: params[:comment])
+                else
+                  @post.comments.where(parent_id: nil)
+                end
+
+    @comments = @comments.page(params[:page]).per(5)
   end
 
   # GET /posts/new

@@ -1,12 +1,13 @@
 <% nesting     = local_assigns.fetch(:nesting, 1) %>
 <% max_nesting = local_assigns[:max_nesting] %>
+<% continue_thread = local_assigns[:continue_thread] %>
 
-<div class="border-left pl-4 mt-4">
+<%= tag.div id: dom_id(comment), class: "border-left pl-4 mt-4" do %>
   <% if comment.deleted? %>
-    <strong>[deleted]</strong> posted
+    <strong>[deleted]</strong> <%= link_to "posted", url_for(comment: comment.id, anchor: dom_id(comment)) %>
     <p>[deleted]</p>
   <% else %>
-    <strong><%= comment.user.name %></strong> posted
+    <strong><%= comment.user.name %></strong> <%= link_to "posted", url_for(comment: comment.id, anchor: dom_id(comment)) %>
     <%= simple_format comment.body %>
   <% end %>
 
@@ -25,6 +26,10 @@
   </div>
 
   <%= tag.div id: "#{dom_id(comment)}_comments" do %>
-    <%= render comment.comments, nesting: nesting + 1, max_nesting: local_assigns[:max_nesting] %>
+    <% if continue_thread.present? && nesting >= continue_thread && comment.comments.any? %>
+      <%= link_to "Continue this thread", url_for(comment: comment.id, anchor: dom_id(comment)) %>
+    <% else %>
+      <%= render comment.comments, continue_thread: continue_thread, nesting: nesting + 1, max_nesting: local_assigns[:max_nesting] %>
+    <% end %>
   <% end %>
-</div>
+<% end %>
